@@ -1,6 +1,24 @@
 # oh-my-claudecode local state
 .omc/
 
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+*.tsbuildinfo
+
+# Environment / secrets (NEVER commit real keys)
+.env
+.env.local
+.env.*.local
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+
 # OS / editor cruft
 .DS_Store
 Thumbs.db
