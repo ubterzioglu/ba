@@ -74,4 +74,35 @@ src/
 Statik SPA olduğu için Vercel / Netlify / Cloudflare Pages'e doğrudan dağıtılabilir.
 Build komutu `npm run build`, çıktı dizini `dist/`. Ortam değişkenlerini
 (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) hosting panelinde tanımlayın.
-SPA yönlendirmesi için tüm yolları `index.html`'e yönlendiren bir rewrite ekleyin.
+SPA yönlendirmesi için tüm yolları `index.html`'e yönlendiren bir rewrite ekleyin
+(Vercel için `vercel.json`, Netlify için `public/_redirects` hazırdır).
+
+### Coolify ile Dağıtım
+
+Bu repo Coolify için **Dockerfile** ile hazırdır (multi-stage build → Nginx).
+
+1. Coolify'da **New Resource → Application → Public/Private Git Repository** seçin
+   ve bu repoyu (`github.com/ubterzioglu/ba`) bağlayın.
+2. **Build Pack** olarak **Dockerfile** seçin (repo kökündeki `Dockerfile` kullanılır).
+3. **Environment Variables** bölümünde aşağıdakileri **Build Variable** olarak ekleyin
+   (Vite bunları derleme sırasında gömer — runtime değil):
+   - `VITE_SUPABASE_URL` = `https://yqqcfoyiqqlawwfzvyal.supabase.co`
+   - `VITE_SUPABASE_ANON_KEY` = (Supabase anon key)
+4. **Port**: `80` (Nginx). Coolify reverse proxy + otomatik HTTPS (Let's Encrypt) sağlar.
+5. Domain'inizi (örn. `burakakcakanat.com.tr`) Coolify'da tanımlayın ve deploy edin.
+
+> ⚠️ `service_role key`, DB şifresi ve `sbp_` token'ı Coolify'a **eklemeyin** — bunlar
+> client/build'e gerekmez. `.dockerignore` zaten `.env.local`'ı imaj dışında tutar.
+
+**Yerel Docker testi:**
+
+```bash
+docker build \
+  --build-arg VITE_SUPABASE_URL="https://yqqcfoyiqqlawwfzvyal.supabase.co" \
+  --build-arg VITE_SUPABASE_ANON_KEY="<anon-key>" \
+  -t ba-site .
+docker run --rm -p 8080:80 ba-site   # http://localhost:8080
+```
+
+İlgili dosyalar: [`Dockerfile`](Dockerfile), [`nginx.conf`](nginx.conf),
+[`.dockerignore`](.dockerignore), [`docker-compose.yaml`](docker-compose.yaml).

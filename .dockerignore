@@ -1,0 +1,27 @@
+# Build context'i küçük ve SIR İÇERMEYEN tut
+node_modules
+dist
+dist-ssr
+*.tsbuildinfo
+
+# Sırlar — imaja ASLA girmemeli
+.env
+.env.local
+.env.*.local
+
+# Git ve editör
+.git
+.gitignore
+.idea
+.vscode
+
+# OMC / yerel araç durumu
+.omc
+
+# Doküman ve plan
+*.md
+!README.md
+
+# Log
+*.log
+npm-debug.log*

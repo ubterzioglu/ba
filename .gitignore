@@ -9,6 +9,10 @@ dist/
 dist-ssr/
 *.tsbuildinfo
 
+# Supabase CLI geçici dosyaları
+supabase/.temp/
+supabase/.branches/
+
 # Environment / secrets (NEVER commit real keys)
 .env
 .env.local
