@@ -1,0 +1,9 @@
+# oh-my-claudecode local state
+.omc/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
